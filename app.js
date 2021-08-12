@@ -52,8 +52,8 @@ window.onload = function() {
 
         for (let i = 0, len = params.length; i < len; i++) {
           const param = params[i]
-          const [uuid, value] = param.split('=')
-          map[uuid] = decodeURIComponent(value)
+          const [key, value] = param.split('=')
+          map[key] = decodeURIComponent(value)
         }
       }
 
@@ -72,10 +72,15 @@ window.onload = function() {
   }
 
   function setUserMap(username, uuid, redirect) {
-    if (username && uuid && redirect) {
+    if (username && redirect) {
       const usermap = localStorage.getItem('usermap') || '{}'
       const obj = JSON.parse(usermap)
-      obj[username] = uuid
+
+      if (uuid) {
+        obj[username] = uuid
+      } else {
+        delete obj[username]
+      }
 
       localStorage.setItem('usermap', JSON.stringify(obj))
 

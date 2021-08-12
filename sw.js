@@ -1,5 +1,5 @@
 
-const joe_sw_version = 'v6'
+const joe_sw_version = 'v7'
 
 self.addEventListener('install', function(event) {
   event.waitUntil(
@@ -8,6 +8,7 @@ self.addEventListener('install', function(event) {
         '/sso/',
         '/sso/index.html',
         '/sso/app.js',
+        '/sso/document.html',
         '/sso/fallback.html'
       ])
     })

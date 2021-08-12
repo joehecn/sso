@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentation</title>
+</head>
+<body>
+  <p>注: 请分别对每个查询字段的值做 <span>encodeURIComponent</span>> 转义处理后再拼装Url</p>
+  <pre>
+    例:
+    redirect=https://www.baidu.com/
+    转为
+    redirect=https%3A%2F%2Fwww.baidu.com%2F
+  </pre>
+  <h1>Get usermap</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>参数</th>
+        <th>值</th>
+        <th>必填</th>
+        <th>说明</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>method</td>
+        <td>getusermap</td>
+        <td>是</td>
+        <td>调用方法</td>
+      </tr>
+      <tr>
+        <td>redirect</td>
+        <td>https://www.baidu.com/</td>
+        <td>是</td>
+        <td>重定向地址</td>
+      </tr>
+    </tbody>
+  </table>
+  <pre>
+    https://joehecn.github.io/sso/#method=getusermap&redirect=https%3A%2F%2Fwww.baidu.com%2F
+  </pre>
+
+  <h1>Set usermap</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>参数</th>
+        <th>值</th>
+        <th>必填</th>
+        <th>说明</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>method</td>
+        <td>setusermap</td>
+        <td>是</td>
+        <td>调用方法</td>
+      </tr>
+      <tr>
+        <td>username</td>
+        <td>joe</td>
+        <td>是</td>
+        <td>用户名</td>
+      </tr>
+      <tr>
+        <td>uuid</td>
+        <td>xxxx</td>
+        <td>否</td>
+        <td>凭证，为空时表示 logout 删除用户</td>
+      </tr>
+      <tr>
+        <td>redirect</td>
+        <td>https://www.baidu.com/</td>
+        <td>是</td>
+        <td>重定向地址</td>
+      </tr>
+    </tbody>
+  </table>
+  <pre>
+    # 添加用户
+    https://joehecn.github.io/sso/#method=setusermap&username=joe&uuid=xxxx&redirect=https%3A%2F%2Fwww.baidu.com%2F
+
+    # 删除用户
+    https://joehecn.github.io/sso/#method=setusermap&username=joe&uuid=xxxx&redirect=https%3A%2F%2Fwww.baidu.com%2F
+  </pre>
+</body>
+</html>
