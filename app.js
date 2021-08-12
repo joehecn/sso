@@ -85,7 +85,7 @@ window.onload = function() {
 
   function main() {
     const queryMap = getQueryMap()
-    console.log({ queryMap })
+
     if (queryMap.method === 'getusermap') {
       getUserMap(queryMap.redirect)
     } else if (queryMap['method'] === 'setusermap') {
