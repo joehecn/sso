@@ -25,14 +25,74 @@ if ('serviceWorker' in navigator) {
 }
 
 window.onload = function() {
-  function getQueryMap() {
-    console.log({ location })
-    const query = window.location.search
-
-    return query
+  function goPage(redirect, usermap) {
+    if (usermap) {
+      const code = encodeURIComponent(usermap)
+  
+      let url = `${redirect}?usermap=${code}`
+      if (redirect.includes('?')) {
+        url = `${redirect}&usermap=${code}`
+      }
+    
+      window.location.replace(url)
+    } else {
+      window.location.replace(redirect)
+    }
   }
 
-  const map = getQueryMap()
+  // #method=getusermap&redirect=https%3A%2F%2Fwww.baidu.com%2F
+  // #method=setusermap&username=joe&uuid=xxxx&redirect=https%3A%2F%2Fwww.baidu.com%2F
+  function getQueryMap() {
+    try {
+      const map = {}
 
-  console.log({ map })
+      if (window.location.hash) {
+        const hash = window.location.hash
+        const params = hash.substr(1).split('&')
+
+        for (let i = 0, len = params.length; i < len; i++) {
+          const param = params[i]
+          const [uuid, value] = param.split('=')
+          map[uuid] = decodeURIComponent(value)
+        }
+      }
+
+      return map
+    } catch (error) {
+      console.error(error)
+      return {}
+    }
+  }
+
+  function getUserMap(redirect) {
+    if (redirect) {
+      const usermap = localStorage.getItem('usermap') || '{}'
+      goPage(redirect, usermap)
+    }
+  }
+
+  function setUserMap(username, uuid, redirect) {
+    if (username && uuid && redirect) {
+      const usermap = localStorage.getItem('usermap') || '{}'
+      const obj = JSON.parse(usermap)
+      obj[username] = uuid
+
+      localStorage.setItem('usermap', JSON.stringify(obj))
+
+      goPage(redirect)
+    }
+  }
+
+  function main() {
+    const queryMap = getQueryMap()
+    console.log({ queryMap })
+    if (queryMap.method === 'getusermap') {
+      getUserMap(queryMap.redirect)
+    } else if (queryMap['method'] === 'setusermap') {
+      const { username, uuid, redirect } = queryMap
+      setUserMap(username, uuid, redirect)
+    }
+  }
+
+  main()
 }
