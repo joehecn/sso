@@ -40,8 +40,8 @@ window.onload = function() {
     }
   }
 
-  // #method=getusermap&redirect=https%3A%2F%2Fwww.baidu.com%2F
-  // #method=setusermap&username=joe&uuid=xxxx&redirect=https%3A%2F%2Fwww.baidu.com%2F
+  // https://joehecn.github.io/sso/#method=getusermap&redirect=https%3A%2F%2Fwww.baidu.com%2F
+  // https://joehecn.github.io/sso/#method=setusermap&username=joe&uuid=xxxx&redirect=https%3A%2F%2Fwww.baidu.com%2F
   function getQueryMap() {
     try {
       const map = {}
