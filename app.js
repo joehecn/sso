@@ -25,6 +25,14 @@ if ('serviceWorker' in navigator) {
 }
 
 window.onload = function() {
+  function getQueryMap() {
+    console.log({ location })
+    const query = window.location.search
 
-  console.log({ location })
+    return query
+  }
+
+  const map = getQueryMap()
+
+  console.log({ map })
 }

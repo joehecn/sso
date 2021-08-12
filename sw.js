@@ -1,6 +1,9 @@
+
+const joe_sw_version = 'v1'
+
 self.addEventListener('install', function(event) {
   event.waitUntil(
-    caches.open('v1').then(function(cache) {
+    caches.open(joe_sw_version).then(function(cache) {
       return cache.addAll([
         '/sso/',
         '/sso/index.html',
@@ -24,7 +27,7 @@ self.addEventListener('fetch', function(event) {
         // and serve second one
         let responseClone = response.clone()
         
-        caches.open('v1').then(function (cache) {
+        caches.open(joe_sw_version).then(function (cache) {
           cache.put(event.request, responseClone)
         })
 
@@ -32,7 +35,21 @@ self.addEventListener('fetch', function(event) {
       }).catch(function () {
         // return caches.match('/sw-test/gallery/myLittleVader.jpg')
         return caches.match('/fallback.html')
-      });
+      })
     }
-  }));
+  }))
+})
+
+self.addEventListener('activate', function(event) {
+  var cacheWhitelist = [joe_sw_version]
+
+  event.waitUntil(
+    caches.keys().then(function(keyList) {
+      return Promise.all(keyList.map(function(key) {
+        if (cacheWhitelist.indexOf(key) === -1) {
+          return caches.delete(key)
+        }
+      }))
+    })
+  )
 })
