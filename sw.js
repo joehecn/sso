@@ -1,5 +1,5 @@
 
-const joe_sw_version = 'v7'
+const joe_sw_version = 'v8'
 
 self.addEventListener('install', function(event) {
   event.waitUntil(
