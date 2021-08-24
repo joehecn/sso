@@ -5,7 +5,8 @@ self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open(joe_sw_version).then(function(cache) {
       return cache.addAll([
-        // '/sso/',
+        '/sso/',
+        '/sso/page2.html',
         '/sso/index.html',
         '/sso/app.js',
         '/sso/document.html',

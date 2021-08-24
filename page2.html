@@ -1,27 +1,40 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width">
-    <title>My page title</title>
-    <link rel="stylesheet" href="">
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    <p class="output">iFrame body</p>
-  </body>
-  <script>
-  var output = document.querySelector('.output');
 
-  window.addEventListener('message', onMessage);
+<script>
+window.addEventListener('message', onMessage)
+
+function onMessage(e) {
+  try {
+    const data = JSON.parse(e.data)
   
-  function onMessage(e) {
-  	output.innerHTML = e.data;
-    // Use the transfered port to post a message back to the main frame
-  	e.ports[0].postMessage('Message back from the IFrame');
+    switch (data.method) {
+      case 'getItem':
+        {
+          const { id, keyName } = data
+          const keyValue = localStorage.getItem(keyName)
+          e.ports[0].postMessage(JSON.stringify({ id, keyValue }))
+        }
+        break
+      
+      case 'setItem':
+        {
+          const { id, keyName, keyValue } = data
+          localStorage.setItem(keyName, keyValue)
+          e.ports[0].postMessage(JSON.stringify({ id }))
+        }
+        break
+
+      case 'removeItem':
+        {
+          const { id, keyName } = data
+          localStorage.removeItem(keyName)
+          e.ports[0].postMessage(JSON.stringify({ id }))
+        }
+        break
+      default:
+        break
+    }
+  } catch (error) {
+    console.error(error)
   }
-  </script>
-</html>
+}
+</script>
