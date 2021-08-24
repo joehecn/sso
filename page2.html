@@ -35,6 +35,9 @@ function onMessage(e) {
     }
   } catch (error) {
     console.error(error)
+    const code = error.code || 10000
+    const message = error.message || 'unknown error'
+    e.ports[0].postMessage(JSON.stringify({ id, code, message }))
   }
 }
 </script>
